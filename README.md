@@ -213,7 +213,7 @@ See [TechnicalReference.md](Documentation~/TechnicalReference.md).
 textures, and documentation — is original work by the author, **except**
 the demo novel text in the Example Book sample: Bram Stoker's *Dracula*
 (1897, English) and Sandrova's 1912 Russian translation, both in the
-public domain (see "Demo text sources" in `Samples/ExampleBook/README.md`
+public domain (see "Demo text sources" in `Samples~/ExampleBook/README.md`
 and `Third-Party Notices.txt`).
 
 This package is released under the [MIT License](LICENSE).
