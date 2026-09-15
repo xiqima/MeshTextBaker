@@ -1,0 +1,14 @@
+MeshTextBaker — Third-Party Notices
+
+This package contains no bundled third-party components governed by
+third-party licenses.
+
+The Example Book sample includes the following public-domain demo texts
+(no license obligations, listed for transparency):
+
+- English: Bram Stoker, "Dracula" (1897). Public domain worldwide.
+- Russian: Nina Sandrova's 1912 translation of "Dracula". Public domain.
+
+Fonts: at runtime the package uses TextMeshPro's default font resources
+through the com.unity.textmeshpro UPM dependency declared in package.json.
+No font files are bundled with this package.

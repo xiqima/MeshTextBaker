@@ -1,0 +1,3 @@
+# Excluded from the OpenUPM tarball (npm pack). The working Git clone is unaffected.
+# (.github is GitHub-only config; Unity ignores dot-folders on import anyway.)
+.github/

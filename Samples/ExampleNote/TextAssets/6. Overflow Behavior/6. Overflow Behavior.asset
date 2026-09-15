@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecb34cf15b138448af22f3e41c10d09, type: 3}
+  m_Name: 6. Overflow Behavior
+  m_EditorClassIdentifier: 
+  key: 
+  fallbackLocale: en
+  richTextEnabled: 1
+  markdownEnabled: 1
+  translations:
+  - locale: en
+    text: "In common situations where your written text doesn\u2019t fit, MeshTextBaker
+      can handle this in several ways by changing the Overflow Behavior.\n\nYou can
+      select the \"Shrink to fit\" option for the text so that it fits within the
+      Zone.\n\nOr use Sub Zones that define where the rest of the text will be placed.\nIn
+      other cases, you can simply choose \"Clip\" or \"Ellipsis\"."

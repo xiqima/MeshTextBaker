@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecb34cf15b138448af22f3e41c10d09, type: 3}
+  m_Name: 4. Inline Image and Zone Image
+  m_EditorClassIdentifier: 
+  key: 
+  fallbackLocale: en
+  richTextEnabled: 1
+  markdownEnabled: 1
+  translations:
+  - locale: en
+    text: 'If you want to insert an image, you can easily do so in two ways:
+
+      -
+      Using a separate Zone with the role Image.
+
+      - Or directly in the text
+      using the Inline tag `<image=my_image>`. Like this -> <image=smile h=11>'

@@ -1,0 +1,16 @@
+{
+    "name": "MeshTextBaker.Samples",
+    "rootNamespace": "MeshTextBaker.Samples",
+    "references": [
+        "MeshTextBaker.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,26 @@
+{
+    "name": "MeshTextBaker.Tests.Editor",
+    "rootNamespace": "MeshTextBaker.Tests",
+    "references": [
+        "MeshTextBaker.Runtime",
+        "MeshTextBaker.Editor",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

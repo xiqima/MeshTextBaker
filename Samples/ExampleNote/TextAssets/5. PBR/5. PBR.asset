@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecb34cf15b138448af22f3e41c10d09, type: 3}
+  m_Name: 5. PBR
+  m_EditorClassIdentifier: 
+  key: 
+  fallbackLocale: en
+  richTextEnabled: 1
+  markdownEnabled: 1
+  translations:
+  - locale: en
+    text: '<surface m=1 s=0.9>You can further enhance your text using PBR settings
+      (tags or Zone parameters).</surface>
+
+      Make it more <surface m=0 s=0.95>glossy</surface>,
+      <surface s=0>matte</surface>, or even <emission=#ff5900 i=2>glowing</emission>!'

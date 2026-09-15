@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecb34cf15b138448af22f3e41c10d09, type: 3}
+  m_Name: 1. Welcome note
+  m_EditorClassIdentifier: 
+  key: 
+  fallbackLocale: en
+  richTextEnabled: 1
+  markdownEnabled: 1
+  translations:
+  - locale: en
+    text: 'Welcome to the **MeshTextBaker** example scene!
+
+      Press **Play**
+      and you will be able to see how different features of MeshTextBaker are implemented.
+
+
+
+
+
+
+      To
+      view the book example, load the corresponding Sample and go to the **"MTB Example
+      - book"** scene.'

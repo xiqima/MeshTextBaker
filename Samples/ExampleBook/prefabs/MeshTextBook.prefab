@@ -1,0 +1,740 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4647605027094635229
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.41532785
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.005060515
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9063079
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.42261827
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653553042035495153, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.0000064969868
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653553042035495153, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.0000034008935
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653553042035495153, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -29.11851
+      objectReference: {fileID: 0}
+    - target: {fileID: -4578142537468109012, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -4578142537468109012, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -3813738371616330108, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000013465161
+      objectReference: {fileID: 0}
+    - target: {fileID: -3813738371616330108, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -179.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: -3813738371616330108, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -60.778484
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c18f57a61b3cba946a9eb56657301958, type: 2}
+    - target: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b7d965a08f71fa247bd65dbd3b8d42b5, type: 2}
+    - target: {fileID: 919132149155446097, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_Name
+      value: MeshTextBook
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435904447700909753, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 17.923067
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435904447700909753, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 54.449818
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435904447700909753, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 89.999725
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499556133632358734, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -3.924087e-13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499556133632358734, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.00000019343096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4499556133632358734, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.00000024012385
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.000024355366
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.00005064815
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.0017894922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.0022064208
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.00005064815
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[1]'
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356197116297619622, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746564759562468899, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8288e60d36348694fba383ca65c2f363, type: 2}
+    - target: {fileID: 7887626050201847883, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000000010824832
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887626050201847883, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000013553705
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887626050201847883, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.03819454
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582620457428599081, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.00008191663
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582620457428599081, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -54.44989
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582620457428599081, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.00033228775
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98021
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3211731310801781657}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8522248208717284532}
+  m_SourcePrefab: {fileID: 100100000, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+--- !u!137 &187582569897889611 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4820524506426256790, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+  m_PrefabInstance: {fileID: 4647605027094635229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &732561458796137083 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5356197116297619622, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+  m_PrefabInstance: {fileID: 4647605027094635229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1230900570383654732 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+  m_PrefabInstance: {fileID: 4647605027094635229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5377367687540524378 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 783524416441018247, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+  m_PrefabInstance: {fileID: 4647605027094635229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5530127820984328076 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b8a37defffc1e1a4082cd05cd4b20d79, type: 3}
+  m_PrefabInstance: {fileID: 4647605027094635229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3211731310801781657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530127820984328076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e8f1a29b3d4e6f8a0c1d2e3f4a5b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MeshTextBaker.Runtime::MeshTextBaker.BookController
+  surface: {fileID: 8522248208717284532}
+  animator: {fileID: 1230900570383654732}
+  stackL: {fileID: 5377367687540524378}
+  stackR: {fileID: 187582569897889611}
+  flipSheet: {fileID: 732561458796137083}
+  flipPivot: {fileID: 0}
+  openTrigger: Open
+  closeTrigger: Close
+  openCloseLayer: 0
+  flipMode: 1
+  flipStateName: FlipPage
+  flipLayer: 1
+  dynamicStackThickness: 1
+  thicknessMode: 1
+  thicknessAxis: 1
+  thicknessBlendShape: thickness
+  invertThicknessShape: 0
+  useFlipLiftShapes: 1
+  flipLiftShapeR: lift_R
+  flipLiftShapeL: lift_L
+  flipLiftScaleR: 1.425
+  flipLiftScaleL: 1.425
+  flipLiftTakeoffBias: 0
+  flipLiftLandingBias: 0.15
+  flipLiftMaxWeight: 100
+  minStackScale: 0.05
+  compensateEdgeTiling: 1
+  edgeMaterialIndexL: 1
+  edgeMaterialIndexR: 1
+  edgeUvAxis: 1
+  sleepWhileClosed: 1
+  firstPageOnRight: 1
+  autoHideEmptyStacks: 1
+  openAt: 0
+  bookmarkJumpMode: 2
+  bookmarkMultiFlipDuration: 0.2
+  locale: en
+  turnDuration: 0.4
+  turnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  openDuration: 0.8
+--- !u!114 &8522248208717284532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530127820984328076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2232a4bfc1ad9e04589951611d9012e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MeshTextBaker.Runtime::MeshTextBaker.MeshTextSurface
+  _meshRenderer: {fileID: 0}
+  _meshFilter: {fileID: 0}
+  _skinnedRenderer: {fileID: 0}
+  _bakeSettings:
+    resolution: 2048
+    texturePropertyName: 
+    emissionPropertyName: 
+    heightPropertyName: 
+    baseAlbedoTexture: {fileID: 0}
+    defaultFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    defaultFontSizeMode: 0
+    defaultFontSize: 28
+    defaultTextColor: {r: 0, g: 0, b: 0, a: 0.8392157}
+    defaultAlignment: 257
+    defaultRichTextEnabled: 1
+    defaultMarkdownEnabled: 1
+    defaultUsePbr: 0
+    defaultBlendMode: 0
+    defaultOpacity: 1
+    generateMipMaps: 1
+    measureWindow: 4000
+    imageLibrary:
+    - name: carriage
+      texture: {fileID: 2800000, guid: 51017c4e6dedcdc4c829bb4747256620, type: 3}
+    fontLibrary: []
+  _bakeMode: 2
+  _previewLocale: en
+  _localizationProviderBehaviour: {fileID: 0}
+  _ignoreSceneDefaultProvider: 0
+  _bookText: {fileID: 11400000, guid: d7247cf1d19ee294c90557c617580635, type: 2}
+  _bookLocalizationKey: 
+  _bookMarkdownEnabled: 1
+  _bookUsePbr: 1
+  _pageNumberFont: {fileID: 0}
+  _pageNumberFontSizeMode: 0
+  _pageNumberFontSize: 200
+  _pageNumberAlignment: 514
+  _pageNumberUseDefaultTextColor: 1
+  _pageNumberTextColor: {r: 0, g: 0, b: 0, a: 1}
+  _pageNumberPadding: 0.005
+  _zones:
+  - id: 87a055c1f075404a860fd66aeb23d1e4
+    displayName: stack R
+    uvRect:
+      serializedVersion: 2
+      x: 0.51
+      y: 0.01
+      width: 0.47999996
+      height: 0.61
+    rotation: 0
+    previewColor: {r: 0.6679245, g: 0.01386257, b: 0.44952935, a: 0.3}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 0
+    materialIndex: 0
+    targetRenderer: {fileID: 187582569897889611}
+    padding: 0.04
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 0
+    continueToZoneId: aa8fb9a94cff4678bfa86a4a2d217851
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 2
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: 85f557b121de4e47869cc5d9b14e21fc
+    displayName: stack L
+    uvRect:
+      serializedVersion: 2
+      x: 0.0061890185
+      y: 0.01
+      width: 0.48859936
+      height: 0.61
+    rotation: 0
+    previewColor: {r: 0, g: 1, b: 0.3, a: 0.3}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 1
+    materialIndex: 0
+    targetRenderer: {fileID: 5377367687540524378}
+    padding: 0.04
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 0
+    continueToZoneId: fa3e9da711704418a65bf9c792b74e86
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 2
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: aa8fb9a94cff4678bfa86a4a2d217851
+    displayName: flipper front
+    uvRect:
+      serializedVersion: 2
+      x: 0.51
+      y: 0.01
+      width: 0.47999996
+      height: 0.61
+    rotation: 0
+    previewColor: {r: 0, g: 1, b: 0.3, a: 0.3}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 2
+    materialIndex: 0
+    targetRenderer: {fileID: 732561458796137083}
+    padding: 0.04
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 0
+    continueToZoneId: 
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 2
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: fa3e9da711704418a65bf9c792b74e86
+    displayName: flipper back
+    uvRect:
+      serializedVersion: 2
+      x: 0.0061890185
+      y: 0.01
+      width: 0.48859936
+      height: 0.61
+    rotation: 0
+    previewColor: {r: 0, g: 1, b: 0.3, a: 0.3}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 3
+    materialIndex: 0
+    targetRenderer: {fileID: 732561458796137083}
+    padding: 0.04
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 3
+    continueToZoneId: 33bca0b5323144908899514baa8a03e2
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 2
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: 95d969592a424559848f0ff164706a6e
+    displayName: stack R #
+    uvRect:
+      serializedVersion: 2
+      x: 0.94
+      y: 0
+      width: 0.06
+      height: 0.06
+    rotation: 0
+    previewColor: {r: 1, g: 0.55, b: 0.1, a: 0.35}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 4
+    materialIndex: 0
+    targetRenderer: {fileID: 187582569897889611}
+    padding: 0.005
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 200
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 514
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 0
+    overflowBehavior: 1
+    continueToZoneId: 
+    parentZoneId: 87a055c1f075404a860fd66aeb23d1e4
+    overridePageNumberStyle: 0
+    role: 3
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: eef6470bdc6c4b5a85866f65b9e08257
+    displayName: stack L #
+    uvRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0.06
+      height: 0.06
+    rotation: 0
+    previewColor: {r: 1, g: 0.55, b: 0.1, a: 0.35}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 5
+    materialIndex: 0
+    targetRenderer: {fileID: 5377367687540524378}
+    padding: 0.005
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 200
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 514
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 0
+    overflowBehavior: 1
+    continueToZoneId: 
+    parentZoneId: 85f557b121de4e47869cc5d9b14e21fc
+    overridePageNumberStyle: 0
+    role: 3
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: 30d8afa3a22e41c9a417b1561798ee58
+    displayName: flipper back #
+    uvRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0.06
+      height: 0.06
+    rotation: 0
+    previewColor: {r: 1, g: 0.55, b: 0.1, a: 0.35}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 6
+    materialIndex: 0
+    targetRenderer: {fileID: 732561458796137083}
+    padding: 0.005
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 200
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 514
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 0
+    overflowBehavior: 1
+    continueToZoneId: 
+    parentZoneId: fa3e9da711704418a65bf9c792b74e86
+    overridePageNumberStyle: 0
+    role: 3
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: bc78f55de2684cebbe566619c0392971
+    displayName: flipper front #
+    uvRect:
+      serializedVersion: 2
+      x: 0.94
+      y: 0
+      width: 0.06
+      height: 0.06
+    rotation: 0
+    previewColor: {r: 1, g: 0.55, b: 0.1, a: 0.35}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 7
+    materialIndex: 0
+    targetRenderer: {fileID: 732561458796137083}
+    padding: 0.005
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 200
+    fontSizeMin: 6
+    fontSizeMax: 48
+    alignment: 514
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 0
+    overflowBehavior: 1
+    continueToZoneId: 
+    parentZoneId: aa8fb9a94cff4678bfa86a4a2d217851
+    overridePageNumberStyle: 0
+    role: 3
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  _touchedSlots: []
+  _persistentBakeSources: []

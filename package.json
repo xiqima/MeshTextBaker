@@ -1,0 +1,44 @@
+{
+  "name": "com.xiqima.meshtextbaker",
+  "version": "1.0.0",
+  "displayName": "Mesh Text Baker",
+  "description": "Bake localized TMP text/images onto mesh albedo/PBR maps. Optional Unity/I2/custom provider adapters, mod-friendly external overrides and baseline export for books and props. Requires TextMeshPro incl. TMP Essential Resources; works with Built-in, URP and HDRP. Example scenes included: flippable book + feature showcase (Package Manager > Samples).",
+  "unity": "2022.3",
+  "unityRelease": "0f1",
+  "documentationUrl": "https://github.com/xiqima/MeshTextBaker",
+  "changelogUrl": "https://github.com/xiqima/MeshTextBaker/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/xiqima/MeshTextBaker/blob/main/LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiqima/MeshTextBaker.git"
+  },
+  "keywords": [
+    "text",
+    "bake",
+    "tmp",
+    "localization",
+    "modding",
+    "book",
+    "pbr",
+    "hdrp",
+    "urp"
+  ],
+  "author": {
+    "name": "xiqima"
+  },
+  "samples": [
+    {
+      "displayName": "Example Book",
+      "description": "Flippable 3D book demo: localized Dracula text (en/ru), page-flip animations, book pagination.",
+      "path": "Samples~/ExampleBook"
+    },
+    {
+      "displayName": "Example Note",
+      "description": "Feature showcase: zones, rich text, markdown, inline/zone images, PBR, overflow behaviors.",
+      "path": "Samples~/ExampleNote"
+    }
+  ],
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "name": "MeshTextBaker.UnityLocalization",
+    "rootNamespace": "MeshTextBaker.UnityLocalization",
+    "references": [
+        "MeshTextBaker.Runtime",
+        "Unity.Localization"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "MTB_UNITY_LOCALIZATION"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.localization",
+            "expression": "1.0.0",
+            "define": "MTB_UNITY_LOCALIZATION"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1216326104272313343
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.249
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.113
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00000058114523
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 929e0cddb113c344c95021bc77662880, type: 2}
+    - target: {fileID: 919132149155446097, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      propertyPath: m_Name
+      value: note - Overflow Behavior_ Continue to Sub Zones (See the other side)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2049304607666947731}
+  m_SourcePrefab: {fileID: 100100000, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+--- !u!23 &513647319767123835 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+  m_PrefabInstance: {fileID: 1216326104272313343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2026668159894988462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+  m_PrefabInstance: {fileID: 1216326104272313343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049304607666947731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026668159894988462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2232a4bfc1ad9e04589951611d9012e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 513647319767123835}
+  _meshFilter: {fileID: 2361048173660468145}
+  _skinnedRenderer: {fileID: 0}
+  _bakeSettings:
+    resolution: 1024
+    texturePropertyName: 
+    emissionPropertyName: 
+    heightPropertyName: 
+    baseAlbedoTexture: {fileID: 0}
+    defaultFont: {fileID: 0}
+    defaultFontSizeMode: 0
+    defaultFontSize: 55
+    defaultTextColor: {r: 0, g: 0, b: 0, a: 1}
+    defaultAlignment: 257
+    defaultRichTextEnabled: 1
+    defaultMarkdownEnabled: 1
+    defaultUsePbr: 0
+    defaultBlendMode: 0
+    defaultOpacity: 1
+    generateMipMaps: 1
+    measureWindow: 2000
+    imageLibrary: []
+    fontLibrary: []
+  _bakeMode: 2
+  _previewLocale: en
+  _localizationProviderBehaviour: {fileID: 0}
+  _ignoreSceneDefaultProvider: 0
+  _bookText: {fileID: 0}
+  _bookLocalizationKey: 
+  _bookMarkdownEnabled: 1
+  _bookUsePbr: 0
+  _pageNumberFont: {fileID: 0}
+  _pageNumberFontSizeMode: 0
+  _pageNumberFontSize: 70
+  _pageNumberAlignment: 514
+  _pageNumberUseDefaultTextColor: 1
+  _pageNumberTextColor: {r: 0, g: 0, b: 0, a: 1}
+  _pageNumberPadding: 0.005
+  _zones:
+  - id: 92556a689eb740109f987c471de5c05f
+    displayName: Zone 1
+    uvRect:
+      serializedVersion: 2
+      x: 0.01005095
+      y: 0.015407071
+      width: 0.4750752
+      height: 0.8569767
+    rotation: 0
+    flipHorizontal: 0
+    flipVertical: 0
+    previewColor: {r: 0, g: 1, b: 0.3, a: 0.3}
+    textAsset: {fileID: 11400000, guid: 3b2eed44776b48041ba356a7876d4d5b, type: 2}
+    localizationKey: 
+    orderIndex: 0
+    materialIndex: 0
+    targetRenderer: {fileID: 0}
+    padding: 0.01
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 72
+    lineSpacing: 2
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 3
+    continueToZoneId: dd9b6a72f2ca4c7d85d3308bac187c36
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 0
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  - id: dd9b6a72f2ca4c7d85d3308bac187c36
+    displayName: "Zone 1 \u25B8 Overflow"
+    uvRect:
+      serializedVersion: 2
+      x: 0.5094659
+      y: 0.016279101
+      width: 0.4750752
+      height: 0.8569767
+    rotation: 0
+    flipHorizontal: 0
+    flipVertical: 0
+    previewColor: {r: 0, g: 1, b: 0.3, a: 0.3}
+    textAsset: {fileID: 0}
+    localizationKey: 
+    orderIndex: 1
+    materialIndex: 0
+    targetRenderer: {fileID: 0}
+    padding: 0.01
+    fontOverride: {fileID: 0}
+    fontSizeMode: 0
+    fontSize: 0
+    fontSizeMin: 6
+    fontSizeMax: 72
+    lineSpacing: 2
+    alignment: 257
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    blendMode: 0
+    opacity: 1
+    useDefaultTextColor: 1
+    richTextEnabled: 1
+    markdownEnabled: 1
+    overflowBehavior: 0
+    continueToZoneId: 
+    parentZoneId: 
+    overridePageNumberStyle: 0
+    role: 1
+    imageTexture: {fileID: 0}
+    imageSprite: {fileID: 0}
+    imageTint: {r: 1, g: 1, b: 1, a: 1}
+    imagePreserveAspect: 1
+    usePbr: 0
+    bakeEmission: 0
+    emissionColor: {r: 1, g: 1, b: 1, a: 1}
+    bakePbrMask: 0
+    maskMetallic: 1
+    maskSmoothness: 0.85
+    bakeHeight: 0
+    heightValue: 1
+    heightAmplitude: 0.005
+  _touchedSlots: []
+  _persistentBakeSources: []
+--- !u!33 &2361048173660468145 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: b71f57a40b792bc4fa821e290cccb358, type: 3}
+  m_PrefabInstance: {fileID: 1216326104272313343}
+  m_PrefabAsset: {fileID: 0}

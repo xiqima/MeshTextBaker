@@ -1,0 +1,22 @@
+{
+    "name": "MeshTextBaker.Editor",
+    "rootNamespace": "MeshTextBaker.Editor",
+    "references": [
+        "MeshTextBaker.Runtime",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "UnityEditor.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
