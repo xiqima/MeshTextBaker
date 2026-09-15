@@ -3,7 +3,7 @@
 [![Support on Boosty](https://img.shields.io/badge/Support-Boosty-orange)](https://www.boosty.to/xiqima)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-<img width="250" height="250" alt="MTB logo 1" src="https://github.com/user-attachments/assets/dfecad84-ad22-4eb8-8ea5-7c740ac5d524" />
+<img width="250" height="250" alt="MTB logo 1" src="https://github.com/user-attachments/assets/9c16b918-33d1-4dc4-98ac-61b9784c4f48" />
 
 MeshTextBaker renders TextMeshPro text and images into textures used by 3D mesh materials. The package is intended for books, notes, letters, signs, labels, screens, and other mesh-based text surfaces.
 
