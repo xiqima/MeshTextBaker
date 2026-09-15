@@ -53,6 +53,9 @@ Window → TextMeshPro → Import TMP Essential Resources
 
 ## Example scenes
 
+<img width="640" height="360" alt="MTB_anim1" src="https://github.com/user-attachments/assets/aa20e1cf-0481-4a2c-b2b7-1ab6fbfe21f7" />
+
+
 The package ships two samples:
 
 - **Example Book** — flippable 3D book with localized text (en/ru).
