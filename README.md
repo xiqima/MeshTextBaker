@@ -2,6 +2,7 @@
 
 [![Support on Boosty](https://img.shields.io/badge/Support-Boosty-orange)](https://www.boosty.to/xiqima)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![openupm](https://img.shields.io/npm/v/com.xiqima.meshtextbaker?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.xiqima.meshtextbaker/)
 
 <img width="250" height="250" alt="MTB logo 1" src="https://github.com/user-attachments/assets/9c16b918-33d1-4dc4-98ac-61b9784c4f48" />
 
