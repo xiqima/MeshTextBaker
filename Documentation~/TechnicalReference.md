@@ -195,10 +195,16 @@ A `TextZone` contains:
 
 ### Geometry
 
-- UV rectangle;
+- UV rectangle (may extend outside 0–1; only the overlap is baked);
 - rotation;
 - horizontal/vertical mirror (flip);
 - padding.
+
+### Bake inclusion
+
+`bakeEnabled` (default true) controls whether the zone is in the bake queue. Existing zones stay enabled: the serialized value is an opt-out, so assets saved before this field existed are not skipped.
+
+When false, the next bake removes the zone from the queue and does not draw it. A texture that only that zone occupied is rebuilt from the background so the previous text does not linger. Book page order is unchanged — a disabled PageSlot is still a physical page, it just bakes blank. A disabled zone does not require a renderer on this object; a surface with no zones still reports the missing-renderer error.
 
 ### Source
 
@@ -266,24 +272,27 @@ The UV Editor displays the source albedo texture and zone overlays.
 
 Functions:
 
-- add/delete zones;
-- move and resize zones;
+- add/delete/duplicate zones;
+- move and resize zones, including outside the 0–1 square;
 - rotate zones;
+- corner handles follow the cursor after rotation (opposite corner stays fixed);
 - zoom and pan;
 - enable grid snapping;
 - temporarily snap with Ctrl;
 - magnet edges to other zones;
 - copy dimensions with Match Size;
 - select overlapping zones;
-- create overflow children;
+- toggle Bake per zone;
 - create PageNumber children.
+
+Overflow children are created from the surface inspector, not from this window. The window does not draw overflow-link arrows.
 
 Input:
 
 | Input | Action |
 |---|---|
 | LMB | Select or drag |
-| Corner handle | Resize |
+| Corner handle | Resize. After rotation the handle stays on the cursor; the opposite corner stays fixed |
 | Rotation handle | Rotate |
 | Mouse wheel | Zoom |
 | MMB | Pan |
@@ -768,6 +777,14 @@ surface.BakeForLocale("en");
 surface.BakeZones(zoneTexts, zones, "en");
 surface.ClearBake();
 surface.ReleaseRenderTextures();
+
+zone.bakeEnabled = false;                  // skip this zone on the next bake
+surface.SetZoneBakeEnabled(zone.id, true);
+surface.SetZoneBakeEnabled(index, false);
+bool willBake = surface.IsZoneBakeEnabled(zone.id);
+List<TextZone> queue = surface.GetBakeQueue();
+int changed = surface.SetAllZonesBakeEnabled(true);
+TextZone copy = surface.DuplicateZone(zone);
 ```
 
 ### BookController

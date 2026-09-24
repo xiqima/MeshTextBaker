@@ -69,21 +69,41 @@ namespace MeshTextBaker.Editor
         {
             if (mesh == null || !mesh.isReadable) return;
             Color color = zone.previewColor;
+            if (!zone.bakeEnabled) color.a *= 0.35f;
             if (!isSelected) color.a *= 0.5f;
-            DrawUVRectOnMesh(zone.uvRect, mesh, transform, color, zone.displayName);
+            string label = zone.bakeEnabled ? zone.displayName : zone.displayName + " (skip)";
+            DrawUVRectOnMesh(zone.uvRect, zone.rotation, mesh, transform, color, label);
         }
 
-        private static void DrawUVRectOnMesh(Rect uvRect, Mesh mesh, Transform transform, Color color, string label)
+        private static void DrawUVRectOnMesh(Rect uvRect, float rotation, Mesh mesh, Transform transform, Color color, string label)
         {
             var cache = GetCache(mesh);
             if (cache.uvs == null || cache.uvs.Length == 0) return;
 
+            // Same convention as the baker: rotation is counter-clockwise in UV space (Y up)
+            // around the zone center. An axis-aligned rect is unchanged.
+            Vector2 pivot = uvRect.center;
+            Vector2 bl = new Vector2(uvRect.xMin, uvRect.yMin);
+            Vector2 br = new Vector2(uvRect.xMax, uvRect.yMin);
+            Vector2 tr = new Vector2(uvRect.xMax, uvRect.yMax);
+            Vector2 tl = new Vector2(uvRect.xMin, uvRect.yMax);
+            if (!Mathf.Approximately(rotation, 0f))
+            {
+                float rad = rotation * Mathf.Deg2Rad;
+                float cos = Mathf.Cos(rad);
+                float sin = Mathf.Sin(rad);
+                bl = RotateUv(bl, pivot, cos, sin);
+                br = RotateUv(br, pivot, cos, sin);
+                tr = RotateUv(tr, pivot, cos, sin);
+                tl = RotateUv(tl, pivot, cos, sin);
+            }
+
             using (new Handles.DrawingScope(color))
             {
-                DrawUVLineOnMesh(new Vector2(uvRect.xMin, uvRect.yMax), new Vector2(uvRect.xMax, uvRect.yMax), cache, transform, color);
-                DrawUVLineOnMesh(new Vector2(uvRect.xMin, uvRect.yMin), new Vector2(uvRect.xMax, uvRect.yMin), cache, transform, color);
-                DrawUVLineOnMesh(new Vector2(uvRect.xMin, uvRect.yMin), new Vector2(uvRect.xMin, uvRect.yMax), cache, transform, color);
-                DrawUVLineOnMesh(new Vector2(uvRect.xMax, uvRect.yMin), new Vector2(uvRect.xMax, uvRect.yMax), cache, transform, color);
+                DrawUVLineOnMesh(bl, br, cache, transform, color);
+                DrawUVLineOnMesh(br, tr, cache, transform, color);
+                DrawUVLineOnMesh(tr, tl, cache, transform, color);
+                DrawUVLineOnMesh(tl, bl, cache, transform, color);
 
                 Vector3 center = FindWorldPositionForUV(uvRect.center, cache, transform);
                 if (center != Vector3.zero)
@@ -96,6 +116,12 @@ namespace MeshTextBaker.Editor
                     });
                 }
             }
+        }
+
+        private static Vector2 RotateUv(Vector2 point, Vector2 pivot, float cos, float sin)
+        {
+            Vector2 d = point - pivot;
+            return new Vector2(d.x * cos - d.y * sin, d.x * sin + d.y * cos) + pivot;
         }
 
         private static void DrawUVLineOnMesh(Vector2 uvStart, Vector2 uvEnd, MeshCache cache, Transform transform, Color color)

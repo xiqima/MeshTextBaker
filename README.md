@@ -148,9 +148,9 @@ Supported content includes:
 
 Zones can target the surface renderer or another MeshRenderer/SkinnedMeshRenderer. Multiple zones may share one material texture or target separate material slots.
 
-The UV Editor provides zone creation, selection, movement, resizing, rotation, zoom, pan, snapping, match-size operations, overlap selection, and PageNumber child creation.
+The UV Editor provides zone creation, duplication, selection, movement, resizing, rotation, zoom, pan, snapping, match-size operations, overlap selection, and PageNumber child creation. Corner handles follow the cursor after a zone is rotated. The Scene view overlay uses the same rotation. Zones may extend outside the 0–1 UV square; only the part that overlaps the texture is baked. Duplicate Zone does not share overflow or page-parent links.
 
-Zone order in the surface inspector is the bake order.
+Each zone has a Bake checkbox. Uncheck it to leave that zone out of the next bake. Zone order in the surface inspector is the bake order.
 
 ## Bake modes
 

@@ -789,12 +789,21 @@ namespace MeshTextBaker
             return result;
         }
 
-        /// <summary>True if any zone falls back to this object's own renderer.</summary>
+        /// <summary>
+        /// True if a zone that will actually bake falls back to this object's own renderer.
+        /// Zones left out of the queue do not need one. No zones at all still reports the
+        /// missing-renderer error — existing rigs rely on that warning.
+        /// </summary>
         private bool AnyZoneNeedsOwnRenderer()
         {
-            foreach (var z in _zones)
-                if (z != null && z.targetRenderer == null) return true;
-            return _zones.Count == 0; // no zones at all → the old warning is still helpful
+            if (_zones == null || _zones.Count == 0) return true;
+            for (int i = 0; i < _zones.Count; i++)
+            {
+                TextZone zone = _zones[i];
+                if (zone != null && zone.bakeEnabled && zone.targetRenderer == null)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -1135,6 +1144,123 @@ namespace MeshTextBaker
             parent.continueToZoneId = sub.id;
 
             return sub;
+        }
+
+        /// <summary>
+        /// Duplicates a zone: new id, same style and geometry, slight UV offset so the copy
+        /// is visible. Overflow and page-parent links are not shared (a child has one parent).
+        /// The copy may extend outside the 0–1 UV square.
+        /// </summary>
+        public TextZone DuplicateZone(TextZone source)
+        {
+            if (source == null) return null;
+
+            TextZone copy = source.Clone();
+            copy.displayName = MakeDuplicateName(source.displayName);
+            copy.orderIndex = _zones.Count;
+            Rect r = copy.uvRect;
+            r.position += new Vector2(0.03f, 0.03f);
+            copy.uvRect = r;
+            // Two parents must not feed the same continuation zone, and a copied page number
+            // must not stay a second child of the source's PageSlot.
+            copy.continueToZoneId = "";
+            copy.parentZoneId = "";
+            if (copy.overflowBehavior == TextZoneOverflow.ContinueToSubZones)
+                copy.overflowBehavior = TextZoneOverflow.ShrinkToFit;
+
+            _zones.Add(copy);
+            MarkZonesChanged();
+            return copy;
+        }
+
+        private string MakeDuplicateName(string sourceName)
+        {
+            string root = string.IsNullOrEmpty(sourceName) ? "Zone" : sourceName.Trim();
+            string candidate = root + " Copy";
+            int n = 2;
+            while (HasZoneDisplayName(candidate) && n < 1000)
+            {
+                candidate = root + " Copy " + n;
+                n++;
+            }
+            return candidate;
+        }
+
+        private bool HasZoneDisplayName(string name)
+        {
+            if (_zones == null) return false;
+            for (int i = 0; i < _zones.Count; i++)
+                if (_zones[i] != null && _zones[i].displayName == name) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Zones that will be drawn on the next bake, in list order.
+        /// Zones with <see cref="TextZone.bakeEnabled"/> false are omitted.
+        /// The returned list is a snapshot; mutating it does not change the surface.
+        /// </summary>
+        public List<TextZone> GetBakeQueue()
+        {
+            var list = new List<TextZone>();
+            if (_zones == null) return list;
+            for (int i = 0; i < _zones.Count; i++)
+            {
+                TextZone zone = _zones[i];
+                if (zone != null && zone.bakeEnabled) list.Add(zone);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Includes or excludes a zone from the next bake.
+        /// Returns false if the zone is null or does not belong to this surface.
+        /// </summary>
+        public bool SetZoneBakeEnabled(TextZone zone, bool enabled)
+        {
+            if (zone == null || _zones == null || !_zones.Contains(zone)) return false;
+            if (zone.bakeEnabled == enabled) return true;
+            zone.bakeEnabled = enabled;
+            MarkZonesChanged();
+            return true;
+        }
+
+        /// <summary>Includes or excludes a zone by id. Returns false if the id is unknown.</summary>
+        public bool SetZoneBakeEnabled(string zoneId, bool enabled)
+        {
+            return SetZoneBakeEnabled(FindZoneById(zoneId), enabled);
+        }
+
+        /// <summary>Includes or excludes a zone by list index. Returns false if the index is out of range.</summary>
+        public bool SetZoneBakeEnabled(int zoneIndex, bool enabled)
+        {
+            if (_zones == null || zoneIndex < 0 || zoneIndex >= _zones.Count) return false;
+            return SetZoneBakeEnabled(_zones[zoneIndex], enabled);
+        }
+
+        /// <summary>True when the zone exists on this surface and will be baked.</summary>
+        public bool IsZoneBakeEnabled(string zoneId)
+        {
+            TextZone zone = FindZoneById(zoneId);
+            return zone != null && zone.bakeEnabled;
+        }
+
+        /// <summary>
+        /// Sets <see cref="TextZone.bakeEnabled"/> on every zone.
+        /// Returns how many zones changed.
+        /// </summary>
+        public int SetAllZonesBakeEnabled(bool enabled)
+        {
+            if (_zones == null) return 0;
+            int changed = 0;
+            for (int i = 0; i < _zones.Count; i++)
+            {
+                TextZone zone = _zones[i];
+                if (zone == null || zone.bakeEnabled == enabled) continue;
+                zone.bakeEnabled = enabled;
+                changed++;
+            }
+            if (changed > 0) MarkZonesChanged();
+            return changed;
         }
 
         private void ApplyNewZoneDefaults(TextZone zone)

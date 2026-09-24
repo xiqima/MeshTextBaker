@@ -58,8 +58,36 @@ namespace MeshTextBaker
         /// <summary>Assigns a fresh unique id (used by editors to fix duplicated zones).</summary>
         public void RegenerateId() => id = Guid.NewGuid().ToString("N");
 
+        /// <summary>
+        /// Field-for-field copy, including Unity object references, with a new id.
+        /// A JSON round-trip is not used: <c>UnityEngine.Object</c> references do not survive it.
+        /// </summary>
+        public TextZone Clone()
+        {
+            var clone = (TextZone)MemberwiseClone();
+            clone.RegenerateId();
+            return clone;
+        }
+
         [Tooltip("Human-readable name shown in the inspector.")]
         public string displayName = "New Zone";
+
+        // Opt-out so zones saved before this field existed keep baking. A public bool
+        // initialized to true would deserialize as false on those assets (Unity uses the
+        // type default, not the initializer, for missing serialized fields).
+        [SerializeField]
+        [Tooltip("When enabled, this zone is left out of the bake queue.")]
+        private bool excludeFromBake;
+
+        /// <summary>
+        /// When false, the zone is removed from the bake queue and is not drawn on the next bake.
+        /// Defaults to true, including for zones saved before this option existed.
+        /// </summary>
+        public bool bakeEnabled
+        {
+            get => !excludeFromBake;
+            set => excludeFromBake = !value;
+        }
 
         // ── UV Geometry ──────────────────────────────────────────
         // TODO: Replace Rect with a polygon representation for non-rectangular zones.
@@ -358,6 +386,58 @@ namespace MeshTextBaker
             bakeHeight = src.bakeHeight;
             heightValue = src.heightValue;
             heightAmplitude = src.heightAmplitude;
+        }
+
+        /// <summary>
+        /// Copies every serialized field except <see cref="id"/>. Used by zone duplication.
+        /// </summary>
+        public void CopyAllFrom(TextZone src)
+        {
+            if (src == null) return;
+            displayName = src.displayName;
+            uvRect = src.uvRect;
+            rotation = src.rotation;
+            flipHorizontal = src.flipHorizontal;
+            flipVertical = src.flipVertical;
+            previewColor = src.previewColor;
+            textAsset = src.textAsset;
+            localizationKey = src.localizationKey;
+            orderIndex = src.orderIndex;
+            materialIndex = src.materialIndex;
+            targetRenderer = src.targetRenderer;
+            padding = src.padding;
+            fontOverride = src.fontOverride;
+            fontSizeMode = src.fontSizeMode;
+            fontSize = src.fontSize;
+            fontSizeMin = src.fontSizeMin;
+            fontSizeMax = src.fontSizeMax;
+            lineSpacing = src.lineSpacing;
+            alignment = src.alignment;
+            textColor = src.textColor;
+            blendMode = src.blendMode;
+            opacity = src.opacity;
+            useDefaultTextColor = src.useDefaultTextColor;
+            richTextEnabled = src.richTextEnabled;
+            markdownEnabled = src.markdownEnabled;
+            overflowBehavior = src.overflowBehavior;
+            continueToZoneId = src.continueToZoneId;
+            parentZoneId = src.parentZoneId;
+            overridePageNumberStyle = src.overridePageNumberStyle;
+            role = src.role;
+            imageTexture = src.imageTexture;
+            imageSprite = src.imageSprite;
+            imageTint = src.imageTint;
+            imagePreserveAspect = src.imagePreserveAspect;
+            usePbr = src.usePbr;
+            bakeEmission = src.bakeEmission;
+            emissionColor = src.emissionColor;
+            bakePbrMask = src.bakePbrMask;
+            maskMetallic = src.maskMetallic;
+            maskSmoothness = src.maskSmoothness;
+            bakeHeight = src.bakeHeight;
+            heightValue = src.heightValue;
+            heightAmplitude = src.heightAmplitude;
+            bakeEnabled = src.bakeEnabled;
         }
     }
 }

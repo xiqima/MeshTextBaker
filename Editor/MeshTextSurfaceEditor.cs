@@ -440,7 +440,13 @@ namespace MeshTextBaker.Editor
 
         private void DrawZonesList(MeshTextSurface surface)
         {
-            _showZones = EditorGUILayout.Foldout(_showZones, $"Zones ({surface.zones.Count})", true);
+            int bakeCount = 0;
+            for (int zi = 0; zi < surface.zones.Count; zi++)
+                if (surface.zones[zi] != null && surface.zones[zi].bakeEnabled) bakeCount++;
+            string zonesTitle = bakeCount == surface.zones.Count
+                ? $"Zones ({surface.zones.Count})"
+                : $"Zones ({surface.zones.Count}, {bakeCount} baked)";
+            _showZones = EditorGUILayout.Foldout(_showZones, zonesTitle, true);
             if (!_showZones) return;
 
             SyncZoneOrderToList(surface, recordUndo: false);
@@ -559,7 +565,10 @@ namespace MeshTextBaker.Editor
             var colorRect = GUILayoutUtility.GetRect(16, 16, GUILayout.Width(16), GUILayout.Height(16));
             EditorGUI.DrawRect(colorRect, zone.previewColor);
 
+            Color foldoutColor = GUI.color;
+            if (!zone.bakeEnabled) GUI.color = new Color(1f, 1f, 1f, 0.55f);
             bool newExpanded = EditorGUILayout.Foldout(isExpanded, zone.displayName, true);
+            GUI.color = foldoutColor;
             if (newExpanded != isExpanded)
             {
                 // Independent expansion: opening one zone does NOT close the others.
@@ -568,11 +577,34 @@ namespace MeshTextBaker.Editor
             }
 
             var roleStyle = new GUIStyle(EditorStyles.miniLabel);
-            if (zone.role == TextZoneRole.OverflowOnly) roleStyle.normal.textColor = Color.yellow;
+            if (!zone.bakeEnabled) roleStyle.normal.textColor = Color.gray;
+            else if (zone.role == TextZoneRole.OverflowOnly) roleStyle.normal.textColor = Color.yellow;
             else if (zone.role == TextZoneRole.PageNumber) roleStyle.normal.textColor = new Color(1f, 0.6f, 0.15f);
             else if (zone.role == TextZoneRole.PageSlot) roleStyle.normal.textColor = new Color(0.4f, 0.75f, 1f);
             else roleStyle.normal.textColor = Color.cyan;
             GUILayout.Label(zone.role.ToString(), roleStyle, GUILayout.Width(90));
+
+            bool newBakeEnabled = GUILayout.Toggle(zone.bakeEnabled, BakeToggleContent,
+                GUILayout.Width(18));
+            if (newBakeEnabled != zone.bakeEnabled)
+            {
+                Undo.RecordObject(surface, "Toggle Zone Bake");
+                surface.SetZoneBakeEnabled(zone, newBakeEnabled);
+                EditorUtility.SetDirty(surface);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(surface);
+            }
+
+            if (GUILayout.Button(DuplicateZoneContent(), IconButtonStyle, GUILayout.Width(22), GUILayout.Height(18)))
+            {
+                Undo.RecordObject(surface, "Duplicate Zone");
+                TextZone copy = surface.DuplicateZone(zone);
+                if (copy != null) _expandedZoneIds.Add(copy.id);
+                EditorUtility.SetDirty(surface);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(surface);
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+                return;
+            }
 
             if (GUILayout.Button("\u00d7", GUILayout.Width(20)))
             {
@@ -612,6 +644,11 @@ namespace MeshTextBaker.Editor
             if (newExpanded)
             {
                 EditorGUI.indentLevel++;
+
+                if (!zone.bakeEnabled)
+                    EditorGUILayout.HelpBox(
+                        "Bake is off. This zone stays in the list but is removed from the next bake queue.",
+                        MessageType.None);
 
                 // Draw into temps; commit through Undo.RecordObject only when something changed.
                 EditorGUI.BeginChangeCheck();
@@ -1095,6 +1132,7 @@ namespace MeshTextBaker.Editor
 
             foreach (var zone in surface.zones)
             {
+                if (zone == null || !zone.bakeEnabled) continue;
                 if (zone.role == TextZoneRole.Main && zone.textAsset == null && string.IsNullOrEmpty(zone.localizationKey))
                     EditorGUILayout.HelpBox($"Zone \"{zone.displayName}\" has no text source assigned.", MessageType.Warning);
                 if (zone.role == TextZoneRole.Image && zone.GetImageTexture() == null)
@@ -1184,6 +1222,51 @@ namespace MeshTextBaker.Editor
         {
             if (provider == null) return "(missing)";
             return provider.GetType().Name + " on '" + provider.gameObject.name + "'";
+        }
+
+        private static readonly GUIContent BakeToggleContent = new GUIContent("",
+            "Include this zone in the next bake. Uncheck to remove it from the bake queue. " +
+            "The zone stays in the list.");
+
+        private static GUIStyle _iconButtonStyle;
+        private static GUIContent _duplicateContent;
+        private static bool _duplicateContentProSkin;
+
+        private static GUIStyle IconButtonStyle
+        {
+            get
+            {
+                if (_iconButtonStyle == null)
+                {
+                    _iconButtonStyle = new GUIStyle(EditorStyles.miniButton)
+                    {
+                        padding = new RectOffset(2, 2, 2, 2),
+                        alignment = TextAnchor.MiddleCenter
+                    };
+                }
+                return _iconButtonStyle;
+            }
+        }
+
+        /// <summary>
+        /// Unity's built-in duplicate icon (two overlapping pages). Falls back to a glyph
+        /// only if that icon is missing from this editor build.
+        /// </summary>
+        private static GUIContent DuplicateZoneContent()
+        {
+            if (_duplicateContent != null && _duplicateContentProSkin == EditorGUIUtility.isProSkin)
+                return _duplicateContent;
+
+            _duplicateContentProSkin = EditorGUIUtility.isProSkin;
+            string iconName = _duplicateContentProSkin ? "d_TreeEditor.Duplicate" : "TreeEditor.Duplicate";
+            GUIContent icon = EditorGUIUtility.IconContent(iconName);
+            if (icon == null || icon.image == null)
+                icon = EditorGUIUtility.IconContent("TreeEditor.Duplicate");
+
+            _duplicateContent = icon != null && icon.image != null
+                ? new GUIContent(icon.image, "Duplicate this zone")
+                : new GUIContent("\u29c9", "Duplicate this zone");
+            return _duplicateContent;
         }
 
         private void OnSceneGUI()

@@ -98,6 +98,9 @@ namespace MeshTextBaker
         /// If <paramref name="zoneFilter"/> is non-null, ONLY those zones are baked (used by the
         /// book controller to re-bake just the zones of the target spread, leaving the other
         /// pages' baked textures untouched). When null, all zones are baked.
+        /// Zones with <see cref="TextZone.bakeEnabled"/> false are removed from the queue even
+        /// if they were explicitly filtered in; a texture that only they occupied is rebuilt
+        /// from the background so the previous bake does not linger.
         /// </summary>
         public static BakeResult Bake(MeshTextSurface surface, string locale,
             Dictionary<string, string> pageSlotTexts, ICollection<TextZone> zoneFilter)
@@ -169,6 +172,10 @@ namespace MeshTextBaker
             // The public list is mutable for backwards compatibility. Treat null entries as
             // absent rather than allowing Sort/prepare/grouping to throw at runtime.
             zones.RemoveAll(z => z == null);
+            // Strip after sibling expansion so a disabled zone still marks its texture, then
+            // leaves the draw list. Siblings that remain are redrawn; a texture with nothing
+            // left is queued for a background-only rebuild.
+            HashSet<RendererSlot> clearTargets = CollectAndRemoveDisabledZones(surface, zones);
             zones.Sort((a, b) => a.orderIndex.CompareTo(b.orderIndex));
 
             // ── Resolve final text per zone (overflow routing + overflow behavior). ──
@@ -259,6 +266,14 @@ namespace MeshTextBaker
                     groups[key] = list;
                 }
                 list.Add(zone);
+            }
+
+            // Disabled-only targets are not in `zones` anymore. Rebuild them from the
+            // background so the previous bake of that zone does not stay on the material.
+            foreach (RendererSlot slot in clearTargets)
+            {
+                if (!groups.ContainsKey(slot))
+                    groups[slot] = new List<TextZone>();
             }
 
             foreach (var kv in groups)
@@ -519,6 +534,26 @@ namespace MeshTextBaker
 
             result.success = true;
             return result;
+        }
+
+        /// <summary>
+        /// Removes zones that opted out of baking and records their targets so the next bake
+        /// can clear stale pixels. Call only after the candidate list (filter + siblings) is complete.
+        /// </summary>
+        private static HashSet<RendererSlot> CollectAndRemoveDisabledZones(
+            MeshTextSurface surface, List<TextZone> zones)
+        {
+            var clearTargets = new HashSet<RendererSlot>();
+            for (int i = zones.Count - 1; i >= 0; i--)
+            {
+                TextZone zone = zones[i];
+                if (zone == null || zone.bakeEnabled) continue;
+                Renderer renderer = surface.GetZoneRenderer(zone);
+                if (renderer != null)
+                    clearTargets.Add(new RendererSlot(renderer, zone.materialIndex));
+                zones.RemoveAt(i);
+            }
+            return clearTargets;
         }
 
         /// <summary>

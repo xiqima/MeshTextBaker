@@ -1,12 +1,13 @@
 // Mesh Text Baker — UVZoneEditorWindow.cs
-// EditorWindow for editing text zones in UV-space (move / resize / rotate),
-// with rotated zone rendering, a rotation handle, and overflow-link arrows.
+// EditorWindow for editing text zones in UV-space (move / resize / rotate).
+// Corner handles follow the cursor even when the zone is rotated. Zones may extend
+// outside the 0–1 UV square so a partial overlap can still be baked.
 //
 // Editor correctness:
 //   - _surface survives domain reloads (restored from instance id in OnEnable).
 //   - Canvas texture falls back to the material's albedo when baseAlbedoTexture is unset.
 //   - All zone mutations go through Undo.RecordObject + SetDirty + prefab modifications.
-//   - Destructive list actions (delete / create sub-zone) are DEFERRED to after the draw
+//   - Destructive list actions (delete / duplicate) are DEFERRED to after the draw
 //     loop to avoid GUILayout Begin/End mismatches.
 
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace MeshTextBaker.Editor
         private Vector2 _dragStart;
         private Rect _dragOriginalRect;
         private float _dragOriginalRotation;
+        // Canvas-space offset from the grabbed corner to the click, so a resize tracks
+        // the cursor 1:1 without jumping the handle onto the click point.
+        private Vector2 _dragCornerGrabOffset;
 
         private bool _isCreating = false;
         private Vector2 _createStart;
@@ -41,7 +45,7 @@ namespace MeshTextBaker.Editor
 
         // Deferred actions (applied after the draw loop; -1 = none).
         private int _pendingDeleteIndex = -1;
-        private int _pendingCreateSubIndex = -1;
+        private int _pendingDuplicateIndex = -1;
         private int _pendingPageNumIndex = -1;
 
         // Snap / match-size helpers
@@ -192,7 +196,7 @@ namespace MeshTextBaker.Editor
             }
 
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Scroll=zoom · MMB/Alt+LMB/Shift+LMB=pan · Ctrl=snap · RMB=pick",
+            GUILayout.Label("Scroll=zoom · MMB/Alt+LMB/Shift+LMB=pan · Ctrl=snap · RMB=menu",
                 EditorStyles.miniLabel);
 
             EditorGUILayout.EndHorizontal();
@@ -219,8 +223,7 @@ namespace MeshTextBaker.Editor
             r.width = source.uvRect.width;
             r.height = source.uvRect.height;
             r.center = center;
-            r.x = Mathf.Clamp(r.x, 0f, 1f - r.width);
-            r.y = Mathf.Clamp(r.y, 0f, 1f - r.height);
+            // Zones may extend outside 0–1; only the overlapping part is sampled at bake.
             target.uvRect = r;
             FlushDirty();
             Repaint();
@@ -252,8 +255,6 @@ namespace MeshTextBaker.Editor
             float y = Snap(r.y);
             float w = Mathf.Max(_snapStep, Snap(r.width));
             float h = Mathf.Max(_snapStep, Snap(r.height));
-            x = Mathf.Clamp(x, 0f, 1f - w);
-            y = Mathf.Clamp(y, 0f, 1f - h);
             return new Rect(x, y, w, h);
         }
 
@@ -328,14 +329,12 @@ namespace MeshTextBaker.Editor
             }
 
             var result = Rect.MinMaxRect(
-                Mathf.Clamp01(Mathf.Min(xMin, xMax)),
-                Mathf.Clamp01(Mathf.Min(yMin, yMax)),
-                Mathf.Clamp01(Mathf.Max(xMin, xMax)),
-                Mathf.Clamp01(Mathf.Max(yMin, yMax)));
+                Mathf.Min(xMin, xMax),
+                Mathf.Min(yMin, yMax),
+                Mathf.Max(xMin, xMax),
+                Mathf.Max(yMin, yMax));
             if (result.width < 0.01f) result.width = 0.01f;
             if (result.height < 0.01f) result.height = 0.01f;
-            result.x = Mathf.Clamp(result.x, 0f, 1f - result.width);
-            result.y = Mathf.Clamp(result.y, 0f, 1f - result.height);
             return result;
         }
 
@@ -400,7 +399,6 @@ namespace MeshTextBaker.Editor
                     "No texture found on the material.\nZones are edited on the UV 0–1 square.");
 
             DrawUVGrid(texRect);
-            DrawSubZoneLinks(texRect);
 
             for (int i = 0; i < _surface.zones.Count; i++)
                 DrawZone(texRect, _surface.zones[i], i == _selectedZoneIndex);
@@ -460,8 +458,17 @@ namespace MeshTextBaker.Editor
         }
 
         private Vector2[] GetZoneCanvasCorners(Rect texRect, TextZone zone)
+            => GetCanvasCorners(texRect, zone.uvRect, zone.rotation);
+
+        /// <summary>
+        /// Canvas-pixel corners of an axis-aligned UV rect rotated around its center.
+        /// Index: 0 = UV bottom-left, 1 = bottom-right, 2 = top-right, 3 = top-left.
+        /// Rotation is applied in canvas pixels (isotropic with bake pixels), not in raw UV,
+        /// so a non-square texture does not shear the overlay.
+        /// </summary>
+        private Vector2[] GetCanvasCorners(Rect texRect, Rect uvRect, float rotationDeg)
         {
-            Rect aabb = UVToCanvas(texRect, zone.uvRect);
+            Rect aabb = UVToCanvas(texRect, uvRect);
             Vector2 c = new Vector2(aabb.center.x, aabb.center.y);
 
             Vector2 bl = new Vector2(aabb.xMin, aabb.yMax);
@@ -469,7 +476,7 @@ namespace MeshTextBaker.Editor
             Vector2 tr = new Vector2(aabb.xMax, aabb.yMin);
             Vector2 tl = new Vector2(aabb.xMin, aabb.yMin);
 
-            float rad = -zone.rotation * Mathf.Deg2Rad;
+            float rad = -rotationDeg * Mathf.Deg2Rad;
             return new[]
             {
                 RotateAround(bl, c, rad), RotateAround(br, c, rad),
@@ -503,9 +510,13 @@ namespace MeshTextBaker.Editor
         private void DrawZone(Rect texRect, TextZone zone, bool selected)
         {
             var corners = GetZoneCanvasCorners(texRect, zone);
+            bool baking = zone.bakeEnabled;
             Color border = selected ? Color.white : new Color(1, 1, 1, 0.6f);
+            if (!baking) border.a *= 0.4f;
 
-            Handles.color = zone.previewColor;
+            Color fill = zone.previewColor;
+            if (!baking) fill.a *= 0.35f;
+            Handles.color = fill;
             Handles.DrawAAConvexPolygon(corners[0], corners[1], corners[2], corners[3]);
 
             Handles.color = border;
@@ -517,9 +528,8 @@ namespace MeshTextBaker.Editor
                 normal = { textColor = selected ? Color.yellow : Color.white },
                 fontSize = 10
             };
-            string label = zone.role == TextZoneRole.OverflowOnly ? "↳ " + zone.displayName
-                : zone.role == TextZoneRole.PageNumber ? "# " + zone.displayName
-                : zone.displayName;
+            string label = zone.role == TextZoneRole.PageNumber ? "# " + zone.displayName : zone.displayName;
+            if (!baking) label += " (skip)";
             if (zone.flipHorizontal) label += " \u21d4";
             if (zone.flipVertical) label += " \u21d5";
             GUI.Label(new Rect(corners[3].x + 2, corners[3].y, 200, 16), label, labelStyle);
@@ -539,36 +549,6 @@ namespace MeshTextBaker.Editor
                 Handles.color = Color.white;
                 GUI.Label(new Rect(rotPos.x + 8, rotPos.y - 8, 60, 16), $"{zone.rotation:F0}\u00b0", EditorStyles.miniLabel);
             }
-        }
-
-        private void DrawSubZoneLinks(Rect texRect)
-        {
-            foreach (var zone in _surface.zones)
-            {
-                if (zone.overflowBehavior != TextZoneOverflow.ContinueToSubZones) continue;
-                if (string.IsNullOrEmpty(zone.continueToZoneId)) continue;
-
-                var target = _surface.FindZoneById(zone.continueToZoneId);
-                if (target == null) continue;
-
-                Vector2 from = GetZoneCanvasCenter(texRect, zone);
-                Vector2 to = GetZoneCanvasCenter(texRect, target);
-                Handles.color = new Color(1f, 0.6f, 0.1f, 0.9f);
-                Handles.DrawLine(from, to);
-                DrawArrowHead(from, to);
-            }
-        }
-
-        private void DrawArrowHead(Vector2 from, Vector2 to)
-        {
-            Vector2 dir = (to - from).normalized;
-            if (dir.sqrMagnitude < 1e-4f) return;
-            Vector2 perp = new Vector2(-dir.y, dir.x);
-            float size = 8f;
-            Vector2 tip = to - dir * 6f;
-            Vector2 a = tip - dir * size + perp * size * 0.5f;
-            Vector2 b = tip - dir * size - perp * size * 0.5f;
-            Handles.DrawAAConvexPolygon(tip, a, b);
         }
 
         private void DrawRectOutline(Rect rect, Color color)
@@ -731,6 +711,11 @@ namespace MeshTextBaker.Editor
                     }
                     menu.AddSeparator("");
                     int top = under[0];
+                    menu.AddItem(new GUIContent("Duplicate Zone"), false, () =>
+                    {
+                        _pendingDuplicateIndex = top;
+                        Repaint();
+                    });
                     menu.AddItem(new GUIContent("Use As Match-Size Source"), false, () =>
                     {
                         _matchSizeSourceIndex = top;
@@ -778,6 +763,8 @@ namespace MeshTextBaker.Editor
                     {
                         _isDragging = true; _isRotating = false; _dragCorner = corner; _dragDirty = false;
                         _dragStart = e.mousePosition; _dragOriginalRect = sel.uvRect; _dragOriginalRotation = sel.rotation;
+                        Vector2 cornerPos = GetCanvasCorners(texRect, sel.uvRect, sel.rotation)[corner];
+                        _dragCornerGrabOffset = e.mousePosition - cornerPos;
                         Repaint(); e.Use(); return;
                     }
                 }
@@ -824,48 +811,141 @@ namespace MeshTextBaker.Editor
                 }
                 else if (_dragCorner >= 0)
                 {
-                    Vector2 startUV = CanvasPixelToUV(texRect, _dragStart);
-                    Vector2 curUV = CanvasPixelToUV(texRect, e.mousePosition);
-                    Vector2 deltaUV = curUV - startUV;
-                    float rad = -zone.rotation * Mathf.Deg2Rad;
-                    float cos = Mathf.Cos(rad), sin = Mathf.Sin(rad);
-                    Vector2 localDelta = new Vector2(deltaUV.x * cos - deltaUV.y * sin, deltaUV.x * sin + deltaUV.y * cos);
+                    // Keep the grabbed corner on the cursor (minus the click offset) instead of
+                    // sliding it along the zone's rotated axes. Opposite corner stays fixed.
+                    Vector2 target = e.mousePosition - _dragCornerGrabOffset;
+                    bool axisAligned = Mathf.Abs(_dragOriginalRotation) < 0.01f;
+                    if (!axisAligned)
+                        target = SnapAndMagnetCanvasPoint(texRect, target, _selectedZoneIndex);
 
-                    Rect r = _dragOriginalRect;
-                    float xMin = r.xMin, yMin = r.yMin, xMax = r.xMax, yMax = r.yMax;
-                    switch (_dragCorner)
+                    Rect resized = ResizeToCursor(texRect, _dragOriginalRect, _dragOriginalRotation, _dragCorner, target);
+                    if (axisAligned)
                     {
-                        case 0: xMin += localDelta.x; yMin += localDelta.y; break;
-                        case 1: xMax += localDelta.x; yMin += localDelta.y; break;
-                        case 2: xMax += localDelta.x; yMax += localDelta.y; break;
-                        case 3: xMin += localDelta.x; yMax += localDelta.y; break;
+                        resized = SnapRect(resized);
+                        resized = MagnetToOtherCorners(resized, _selectedZoneIndex, _dragCorner);
                     }
-
-                    const float minSize = 0.01f;
-                    if (xMax - xMin < minSize) { if (_dragCorner == 0 || _dragCorner == 3) xMin = xMax - minSize; else xMax = xMin + minSize; }
-                    if (yMax - yMin < minSize) { if (_dragCorner == 0 || _dragCorner == 1) yMin = yMax - minSize; else yMax = yMin + minSize; }
-
-                    Rect resized = Rect.MinMaxRect(
-                        Mathf.Clamp01(xMin), Mathf.Clamp01(yMin), Mathf.Clamp01(xMax), Mathf.Clamp01(yMax));
-                    resized = SnapRect(resized);
-                    zone.uvRect = MagnetToOtherCorners(resized, _selectedZoneIndex, _dragCorner);
+                    zone.uvRect = resized;
                 }
                 else
                 {
+                    // AABB snap/magnet slides a rotated overlay off the grab point. Snap the
+                    // cursor in canvas space instead, so the zone stays under the pointer.
+                    bool axisAligned = Mathf.Abs(_dragOriginalRotation) < 0.01f;
+                    Vector2 cur = axisAligned
+                        ? e.mousePosition
+                        : SnapAndMagnetCanvasPoint(texRect, e.mousePosition, _selectedZoneIndex);
                     Vector2 startUV = CanvasPixelToUV(texRect, _dragStart);
-                    Vector2 curUV = CanvasPixelToUV(texRect, e.mousePosition);
-                    Vector2 delta = curUV - startUV;
+                    Vector2 curUV = CanvasPixelToUV(texRect, cur);
                     Rect newRect = _dragOriginalRect;
-                    newRect.position += delta;
-                    newRect.x = Mathf.Clamp(newRect.x, 0f, 1f - newRect.width);
-                    newRect.y = Mathf.Clamp(newRect.y, 0f, 1f - newRect.height);
-                    newRect = SnapRect(newRect);
-                    zone.uvRect = MagnetToOtherCorners(newRect, _selectedZoneIndex, -1);
+                    newRect.position += curUV - startUV;
+                    if (axisAligned)
+                    {
+                        newRect = SnapRect(newRect);
+                        newRect = MagnetToOtherCorners(newRect, _selectedZoneIndex, -1);
+                    }
+                    zone.uvRect = newRect;
                 }
 
                 Repaint(); e.Use();
             }
             // MouseUp is handled at the top of this method (works outside the canvas too).
+        }
+
+        /// <summary>
+        /// Rebuilds the zone so the dragged corner sits on <paramref name="mouseCanvas"/> and the
+        /// opposite corner stays where it was. Solved in canvas pixels: rotation is isotropic
+        /// there (same as the baker, 1 unit = 1 pixel), while raw UV is not when the texture
+        /// isn't square. The resulting rect is not clamped to 0–1.
+        /// Crossing the anchor flips the rect; a corner stays on the cursor. The canonical
+        /// index may swap, and mouse-up hit-testing picks the corner now under the pointer.
+        /// </summary>
+        private Rect ResizeToCursor(Rect texRect, Rect originalUv, float rotationDeg, int corner, Vector2 mouseCanvas)
+        {
+            if (texRect.width < 1f || texRect.height < 1f) return originalUv;
+
+            int opposite = (corner + 2) & 3;
+            Vector2 anchor = GetCanvasCorners(texRect, originalUv, rotationDeg)[opposite];
+
+            float rad = -rotationDeg * Mathf.Deg2Rad;
+            float cos = Mathf.Cos(rad);
+            float sin = Mathf.Sin(rad);
+            Vector2 delta = mouseCanvas - anchor;
+            Vector2 local = new Vector2(delta.x * cos + delta.y * sin, -delta.x * sin + delta.y * cos);
+
+            float minW = Mathf.Max(2f, 0.01f * texRect.width);
+            float minH = Mathf.Max(2f, 0.01f * texRect.height);
+            float fallbackX = (corner == 1 || corner == 2) ? 1f : -1f;
+            float fallbackY = (corner == 0 || corner == 1) ? 1f : -1f;
+            local.x = ClampAbs(local.x, minW, fallbackX);
+            local.y = ClampAbs(local.y, minH, fallbackY);
+
+            Vector2 along = new Vector2(local.x * cos - local.y * sin, local.x * sin + local.y * cos);
+            Vector2 center = anchor + along * 0.5f;
+            float halfW = Mathf.Abs(local.x) * 0.5f;
+            float halfH = Mathf.Abs(local.y) * 0.5f;
+            var aabb = new Rect(center.x - halfW, center.y - halfH, halfW * 2f, halfH * 2f);
+            return CanvasRectToUV(texRect, aabb);
+        }
+
+        private static float ClampAbs(float value, float minAbs, float fallbackSign)
+        {
+            if (Mathf.Abs(value) >= minAbs) return value;
+            float sign = value > 0f ? 1f : (value < 0f ? -1f : fallbackSign);
+            return sign * minAbs;
+        }
+
+        private Rect CanvasRectToUV(Rect texRect, Rect canvasRect)
+        {
+            float u = (canvasRect.x - texRect.x) / texRect.width;
+            float v = 1f - (canvasRect.yMax - texRect.y) / texRect.height;
+            float w = canvasRect.width / texRect.width;
+            float h = canvasRect.height / texRect.height;
+            return new Rect(u, v, w, h);
+        }
+
+        private Vector2 UvToCanvasPoint(Rect texRect, Vector2 uv)
+        {
+            return new Vector2(
+                texRect.x + uv.x * texRect.width,
+                texRect.y + (1f - uv.y) * texRect.height);
+        }
+
+        /// <summary>
+        /// Snaps a canvas point to the UV grid when snap is on, then magnets it to another
+        /// zone's visual corner while Ctrl/Cmd is held. Used so a rotated resize still lands
+        /// the handle on the (snapped) cursor.
+        /// </summary>
+        private Vector2 SnapAndMagnetCanvasPoint(Rect texRect, Vector2 canvasPoint, int excludeIndex)
+        {
+            if (SnapActiveNow())
+            {
+                Vector2 uv = CanvasPixelToUV(texRect, canvasPoint);
+                uv.x = Snap(uv.x);
+                uv.y = Snap(uv.y);
+                canvasPoint = UvToCanvasPoint(texRect, uv);
+            }
+
+            Event e = Event.current;
+            if (e == null || !(e.control || e.command) || _surface == null) return canvasPoint;
+
+            const float threshPx = 8f;
+            float best = threshPx;
+            Vector2 result = canvasPoint;
+            for (int i = 0; i < _surface.zones.Count; i++)
+            {
+                if (i == excludeIndex || _surface.zones[i] == null) continue;
+                Vector2[] corners = GetZoneCanvasCorners(texRect, _surface.zones[i]);
+                for (int c = 0; c < corners.Length; c++)
+                {
+                    float d = Vector2.Distance(canvasPoint, corners[c]);
+                    if (d < best)
+                    {
+                        best = d;
+                        result = corners[c];
+                    }
+                }
+            }
+            return result;
         }
 
         private int HitTestRotatedCorner(Rect texRect, TextZone zone, Vector2 mouse, float tol)
@@ -978,10 +1058,11 @@ namespace MeshTextBaker.Editor
             EditorGUI.BeginChangeCheck();
 
             EditorGUILayout.BeginHorizontal();
-            string prefix = indent > 0
-                ? (zone.role == TextZoneRole.PageNumber ? "# " : "\u21b3 ")
-                : "";
+            string prefix = indent > 0 && zone.role == TextZoneRole.PageNumber ? "# " : "";
             string newName = EditorGUILayout.TextField(prefix + "Name", zone.displayName);
+            bool newBake = GUILayout.Toggle(zone.bakeEnabled, new GUIContent("",
+                "Include this zone in the next bake. Off removes it from the bake queue."),
+                GUILayout.Width(18));
             if (GUILayout.Button(selected ? "\u25cf" : "\u25cb", GUILayout.Width(24)))
                 _selectedZoneIndex = i;
             EditorGUILayout.EndHorizontal();
@@ -999,6 +1080,7 @@ namespace MeshTextBaker.Editor
             {
                 RecordSurface("Edit Zone");
                 zone.displayName = newName;
+                zone.bakeEnabled = newBake;
                 zone.uvRect = newUvRect;
                 zone.rotation = newRotation;
                 zone.flipHorizontal = newFlipH;
@@ -1008,9 +1090,10 @@ namespace MeshTextBaker.Editor
             }
 
             EditorGUILayout.BeginHorizontal();
-            if (zone.role != TextZoneRole.PageNumber &&
-                GUILayout.Button("\u271a Create Sub-Zone"))
-                _pendingCreateSubIndex = i;
+            if (GUILayout.Button(new GUIContent("Duplicate Zone",
+                "Duplicate this zone: new id, same style and geometry, slight UV offset. " +
+                "Overflow and page-parent links are not shared.")))
+                _pendingDuplicateIndex = i;
             if (zone.role == TextZoneRole.PageSlot &&
                 GUILayout.Button(new GUIContent("\u271a Page #",
                     "Create a child PageNumber zone (same renderer/slot). Move it freely on the canvas.")))
@@ -1026,14 +1109,15 @@ namespace MeshTextBaker.Editor
         /// <summary>Deferred destructive actions — applied OUTSIDE the layout loop.</summary>
         private void ApplyPendingActions()
         {
-            if (_pendingCreateSubIndex >= 0 && _pendingCreateSubIndex < _surface.zones.Count)
+            if (_pendingDuplicateIndex >= 0 && _pendingDuplicateIndex < _surface.zones.Count)
             {
-                RecordSurface("Create Sub-Zone");
-                var sub = _surface.CreateSubZone(_surface.zones[_pendingCreateSubIndex]);
-                _selectedZoneIndex = _surface.zones.IndexOf(sub);
+                RecordSurface("Duplicate Zone");
+                var copy = _surface.DuplicateZone(_surface.zones[_pendingDuplicateIndex]);
+                if (copy != null)
+                    _selectedZoneIndex = _surface.zones.IndexOf(copy);
                 FlushDirty();
             }
-            _pendingCreateSubIndex = -1;
+            _pendingDuplicateIndex = -1;
 
             if (_pendingPageNumIndex >= 0 && _pendingPageNumIndex < _surface.zones.Count)
             {
