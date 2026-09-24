@@ -32,7 +32,7 @@ book UI. Built-in render pipeline (Standard materials).
 - English: Bram Stoker, *Dracula* (1897).
 - Russian: Sandrova's 1912 translation of *Dracula* (public domain).
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Support
 

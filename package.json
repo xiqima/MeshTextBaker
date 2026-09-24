@@ -1,6 +1,6 @@
 {
   "name": "com.xiqima.meshtextbaker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Mesh Text Baker",
   "description": "Bake localized TMP text/images onto mesh albedo/PBR maps. Optional Unity/I2/custom provider adapters, mod-friendly external overrides and baseline export for books and props. Requires TextMeshPro incl. TMP Essential Resources; works with Built-in, URP and HDRP. Example scenes included: flippable book + feature showcase (Package Manager > Samples).",
   "unity": "2022.3",

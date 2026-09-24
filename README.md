@@ -40,7 +40,7 @@ CLI alternative: `openupm add com.xiqima.meshtextbaker`.
 https://github.com/xiqima/MeshTextBaker.git
 ```
 
-(Any released version can be pinned with `#1.0.0`, e.g. `…/MeshTextBaker.git#1.0.0`.)
+(Any released version can be pinned with `#1.0.1`, e.g. `…/MeshTextBaker.git#1.0.1`.)
 
 **Option C — manual.** Download the repo as ZIP and use `Add package from disk…`.
 
