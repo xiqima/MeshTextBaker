@@ -22,7 +22,7 @@ Unity Localization is optional.
 
 ## Installation
 
-**Option A — OpenUPM (recommended).** Add the OpenUPM scoped registry once per project:
+**Option A — OpenUPM.** Add the OpenUPM scoped registry once per project:
 
 ```text
 Edit → Project Settings → Package Manager → Scoped Registries → +
